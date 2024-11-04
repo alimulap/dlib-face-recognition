@@ -63,6 +63,19 @@ impl FaceEncoding {
             })
         }
     }
+
+    pub fn to_vec(&self) -> Vec<f64> {
+        let mut values = vec![0.0; 128];
+        unsafe {
+            let ptr = values.as_mut_ptr();
+            cpp!([self as "const dlib::matrix<double,0,1>*", ptr as "double*"] {
+                for (int i = 0; i < 128; i++) {
+                    ptr[i] = (*self)(i);
+                }
+            });
+        }
+        values
+    }
 }
 
 impl fmt::Debug for FaceEncoding {
