@@ -129,6 +129,7 @@ fn build(src: &Path) {
     let dst = cmake::Config::new(src)
         .no_build_target(false)
         .define("CMAKE_INSTALL_PREFIX", "install")
+        .define("DLIB_USE_CUDA", "0")
         .build();
 
     // Copy the library file
